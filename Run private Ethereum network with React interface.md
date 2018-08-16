@@ -2,7 +2,7 @@
 
 In this guide, I will show the steps to run a Ethereum private network on your computer, install smart contract and interact with them via a React interface.
 
-The document is base on this two tutorials:
+The document is based on two tutorials:
 
 How to develop on Ethereum using Remix, Metamask and React:
 
@@ -34,9 +34,9 @@ The tools necessary are :
 
 Remark : Be sure to connected on remix HTTP and not HTTPS, otherwise you will have error while trying to connect to your local network.
 
-Please follow instruction to install the tools as given by official websites.
+Please follow instructions to install the tools as given by official websites.
 
-**Create 2 Ethereum wallets on MyEtherWallet and download the corresponding UTC files.** Note down your passphrases and the private keys in a secure place.
+**Create 2 Ethereum wallets on MyEtherWallet, note down your passphrases, the private keys in a secure place and download the corresponding UTC files.**
 
 
 
@@ -52,7 +52,7 @@ In this chapter I will provide the steps to create the Genesis block and start u
 
 3. Paste the following code
 
-   And replace FIRST_WALLET_ADDRESS and SECOND_WALLET_ADDRESS by the public addresses of the wallets created in first section of this document. (The second wallet will be used to start a second node on the network).
+   And replace FIRST_WALLET_ADDRESS and SECOND_WALLET_ADDRESS by the public addresses (like e2148925f4a356bfb52d2047698f329c48ae5846) of the wallets created in first section of this document. (The second wallet will be used to start a second node on the network).
 
    ```
    {
@@ -101,13 +101,13 @@ Here you can allocate ETH to specific addresses. This won’t create the account
 
 #### Start the Ethereum node 
 
-`geth --rpc --rpcport "8545" --rpcapi "db,eth,net,web3,personal,web3,debug" --rpccorsdomain="nkbihfbeogaeaoehlefnkodbefgpgknn" --datadir ./myDataDir --networkid 1994 console 2>> myEth.log`
+`geth --rpc --rpcport "8545" --rpcapi "db,eth,net,web3,personal,web3,debug" --rpccorsdomain="*" --datadir ./myDataDir --networkid 1994 console 2>> myEth.log`
 
 These parameters will allow us to connect via remix later, note that the networkid parameter here is important and must be the same as the the chainId provided in the genesis block.
 
 If the node started correctly, the ouput is like this:
 
-![1534230058657](/tmp/1534230058657.png)
+![1534395254478](./Doc images/1534395254478.png)
 
 You can display the logs on another terminal: 
 
@@ -161,7 +161,11 @@ Make sure you replace “enode://…@” above with the output from admin.nodeIn
 
 On the second peer : `admin.peers`
 
-Output should show that peer 2 is connected to 127.0.0.1:30303
+Output should show that peer 2 is connected to 127.0.0.1:30303:
+
+![1534395466130](./Doc images/1534395466130.png)
+
+
 
 ## 3. Connect Remix and metamask and deploy smart contract
 
@@ -171,11 +175,13 @@ Click on the metamask icon on your browser.
 
 Add the account of your first wallet, by providing the private key.
 
-Then choose the network local to connect to your private Ethereum node :
+Then choose the network local to connect to your private Ethereum node "Localhost 8545" :
 
-![1534232809159](/tmp/1534232809159.png)
+![1534395649093](./Doc images/1534395649093.png)
 
 You should see your fund appear in your wallet.
+
+![1534395599623](./Doc images/1534395599623.png)
 
 ### Remix set up
 
@@ -233,27 +239,27 @@ function () public payable {        // fall back function
 ```
 This is our smart contract with several variables and functions.
 
-You can click on `Start to Compile:` ![1534233097575](/tmp/1534233097575.png)
+You can click on `Start to Compile:` ![1534395686782](./Doc images/1534395686782.png)
 
-Then go on the Run tab and select Web3 Provider : ![1534233248071](/tmp/1534233248071.png)
+Then go on the Run tab and select Web3 Provider : ![1534395707657](./Doc images/1534395707657.png)
 
 
 
-Click OK : ![1534233221164](/tmp/1534233221164.png)
+Click OK : ![1534395746875](./Doc images/1534395746875.png)
 
-This is our node http://localhost:8545, click OK: ![1534233278830](/tmp/1534233278830.png)
+This is our node http://localhost:8545, click OK: ![1534395765197](./Doc images/1534395765197.png)
 
-Remix should look like this :
+Remix should look like this (or other color depending of your theme):
 
-![1534233350050](/tmp/1534233350050.png)
+![1534395801422](./Doc images/1534395801422.png)
 
 you can now click on Deploy
 
-Provide the passphrase you used to initiate your wallet during Chapter 1 and click OK : ![1534233410105](/tmp/1534233410105.png)
+Provide the passphrase you used to initiate your wallet (password of MyEtherWallet) during Chapter 1 and click OK : ![1534395830320](./Doc images/1534395830320.png)
 
-Wait during smart contract creation : ![1534233502439](/tmp/1534233502439.png)
+Wait during smart contract creation : ![1534395867626](./Doc images/1534395867626.png)
 
-Be sure your miner is running, when done it should look like this : ![1534233573512](/tmp/1534233573512.png)
+Be sure your miner is running, when done it should look like this : ![1534395887359](./Doc images/1534395887359.png)
 
 ## 4. Use smart contract via React
 
@@ -539,19 +545,19 @@ Replace the smart contract address, on the line
 
 `ContractInstance: MyContract.at ('0x2edb84e826f93e1075fbb8c34c6f3300bd6aef2c')`
 
-Replace the address the one we generated in the previous section. On remix, run tab, click on the copy icon next to the star in the "Deployed contracts" area : ![1534234750637](/tmp/1534234750637.png)
+Replace the address the one we generated in the previous section. On remix, run tab, click on the copy icon next to the star in the "Deployed contracts" area : ![1534395924520](./Doc images/1534395924520.png)
 
 Each time the smart contract is redeployed, this step is to be reproduced with the new address as well as copy paste the structure in const MyContract = window.web3.eth.contract([ ])
 
 To do this, go to compile tab, and click on Details button on the right of your selected file : 	
 
-![1534234966179](/tmp/1534234966179.png)
+![1534395949820](./Doc images/1534395949820.png)
 
-Then click on the copy button next to the ABI section : ![1534235004183](/tmp/1534235004183.png)
+Then click on the copy button next to the ABI section : ![1534395967036](./Doc images/1534395967036.png)
 
 #### Test the smart contract via React
 
-Once this is done, your react app should look like this : ![1534235128779](/tmp/1534235128779.png)
+Once this is done, your react app should look like this : ![1534395990877](./Doc images/1534395990877.png)
 
 You can inspect the code to see what is doing each button and functions :
 
@@ -563,7 +569,7 @@ You can inspect the code to see what is doing each button and functions :
 
 You will remark that each time a function need gas to work, Metamask will ask you to validate the transaction first :
 
-![1534235633931](/tmp/1534235633931.png)
+![1534396013555](./Doc images/1534396013555.png)
 
 By validating you authorize the transaction and the transfer of the funds.
 
